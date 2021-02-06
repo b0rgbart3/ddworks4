@@ -1,0 +1,130 @@
+html {
+    margin:0;
+    padding:0;
+    width:100%;
+    background-color:#dddddd;
+}
+
+body {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Jost', sans-serif;
+    width:100%;
+}
+
+.inputs label {
+    display:block;
+    padding-right:6px;
+    padding-bottom:0;
+    text-transform: uppercase;
+    vertical-align: top;
+    font-size:16px;
+    color:#666666;
+}
+
+.inputs input {
+    box-sizing:border-box;
+    border:none;
+    width:96%;
+    font-size:20px;
+    padding-left:8px;
+    padding-top:8px;
+    padding-right:8px;
+    outline:none;
+    font-family: 'Jost', sans-serif;
+    background-color:rgba(255,255,255,.5);
+    max-width:600px;
+}
+
+.inputs input.error {
+    border:1px solid rgb(94, 150, 223);
+}
+.inputs input:focus, div.inputs input:hover, div.inputs input:active {
+    outline:none;
+    background-color:rgba(255,255,255,1);
+}
+
+
+
+.inputs textarea {
+    box-sizing:border-box;
+    border:none;
+    width:96%;
+    padding:8px;
+    font-size:20px;
+    font-family: 'Jost', sans-serif;
+    outline:none;
+    background-color:rgba(255,255,255,.5);
+    max-width:600px;
+}
+
+.inputs textarea.error {
+    border:1px solid rgb(94, 150, 223);
+}
+
+.inputs textarea:focus, .inputs textarea:hover, .inputs textarea:active {
+    outline:none;
+    background-color:rgba(255,255,255,1);
+}
+
+
+
+.form {
+    background-color:#dddddd;
+    padding:4%;
+    box-sizing: border-box;
+    padding-bottom:50px;
+}
+
+.form h1 {
+    color:rgb(98, 98, 109);
+    text-transform: uppercase;
+    padding:0;
+    margin:0;
+    margin-bottom:1em;
+}
+
+#human_test {
+    opacity:0;
+    width:100px;
+    display:block;
+    height:1px;
+}
+
+#send {
+    text-transform: uppercase;
+    background-color:rgb(182, 214, 255);
+    margin-bottom:40px;
+    padding:12px;
+    border-radius:4px;
+    opacity:1;
+}
+
+#send:hover {
+    background-color:rgb(140, 190, 255);
+    opacity:1;
+}
+
+p.notify {
+    font-family: 'Caveat', cursive;
+    font-size:27px;
+    padding-top:0;
+    line-height: 1em;
+    margin:0;
+    margin-bottom:18px;
+    color:#666666;
+    color:rgb(94, 150, 223);
+}
+
+.thankyou {
+    background-color:rgb(168, 255, 168);
+    padding-top:50px;
+    padding-bottom:30px;
+    padding-left:4%;
+    padding-right:4%;
+    color:green;
+    font-weight: 400;
+    line-height:2em;
+    font-size:22px;
+}
