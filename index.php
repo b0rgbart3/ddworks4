@@ -14,23 +14,36 @@
 
     <body>
     <?php 
+    $display_thanks = false;
     if (isset($_SESSION['ddw_submission'])&& 
        ($_SESSION['ddw_submission']  == true) &&
        ($_SESSION['ddw_submission_error']==false ))
     {
-        echo "<div class='thankyou'>Thank you for contacting us.<br>We will be in touch shortly.</div>";
+        $display_thanks = true;
+        echo "<div class='thankyou'>Thank you for contacting <span class='noWrapper'>Dority Design Works</span>.<br>We will be in touch shortly.</div>";
         unset($_SESSION['ddw_fullname']);
         unset($_SESSION['ddw_email']);
         unset($_SESSION['ddw_message']);
         unset($_SESSION['ddw_submission']);
         unset($_SESSION['ddw_submission_error']);
     }
-    else {
+   
+    ?>
+    <a name='topper'></a>
+    <div class='topper'>
+        <a href='index.php'><h1>Dority Design Works</h1></a>
+        <div class='burger'>
+            <img src='images/interface/burger.svg'>
+        </div>
+    </div>
+
+    <?php 
+    if ($display_thanks == false) {
     ?>
         <a name='contact'></a>
 
         <form id="contactForm" class='form' method='post' enctype="multipart/form-data" action="gather.php">
-            <h1>Contact Dority Design Works:</h1>  
+            <h1 class=>Contact:</h1>  
             
             <div class='inputs'>
                 <label name='fullname'>Full Name</label>
