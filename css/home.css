@@ -201,3 +201,60 @@ p.notify {
 .noWrapper {
     white-space: nowrap;
 }
+
+.carouselContainer {
+    width:100%;
+    background-color:black;
+    height:500px;
+    box-sizing: border-box;
+    border:2px solid black;
+    overflow: hidden;
+}
+.carousel {
+    width:100%;
+    background-color:black;
+    height:500px;   
+    box-sizing: border-box;
+    position: relative;
+    left:-50px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    touch-action: none;
+}
+
+.slide {
+    width:900px;
+    height:500px;
+    box-sizing: border-box;
+    margin-right:20px;
+    user-select: none;
+    position: absolute;
+
+}
+
+.carousel::-webkit-scrollbar {    display: none;}
+
+.slide1 {
+    background-color:blue;
+    left:0px;
+}
+.slide2 {
+    background-color:yellow;
+    left:900px;
+}
+.slide3 {
+    background-color:red;
+    left:1800px;
+}
+
+.slide img {
+    height:90%;
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}

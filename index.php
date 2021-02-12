@@ -5,9 +5,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dority Design Works</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Caveat:wght@500&family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+
+
+        <!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" /> -->
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        
 
         <link rel="stylesheet" href="css/home.css">
     </head>
@@ -37,6 +43,19 @@
         </div>
     </div>
 
+    <div class='carouselContainer' id="#Car">
+        <div class='carousel' onmousemove="trackMe()">
+            <div class='slide slide1'>
+                <img src='images/work/client1a.jpg' class='slideImage' draggable='false'> 
+            </div>
+            <div class='slide slide2'>
+            <img src='images/work/client1a.jpg' class='slideImage' draggable='false'>
+            </div>
+            <div class='slide slide3'>
+            <img src='images/work/client1a.jpg' class='slideImage' draggable='false'>
+            </div>
+        </div>
+    </div>
     <?php 
     if ($display_thanks == false) {
     ?>
@@ -69,4 +88,5 @@
 
     </body>
 <script src='js/form_validation.js'></script>
+<script src='js/carousel2.js'></script>
 </html>
