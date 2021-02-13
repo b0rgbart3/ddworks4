@@ -1,5 +1,6 @@
 $(document).ready(function() { 
     window.ddw_spinning =false;
+    window.ddw_dragging = false;
 
     jQuery.event.special.touchstart = {
         setup: function( _, ns, handle ){
@@ -26,6 +27,12 @@ $(document).ready(function() {
 
         console.log('carousel down');
         touchDown(e);
+    });
+
+    $(".carousel").on('mousemove', function(e) {
+        if (!window.ddw_spinning) {
+          dragMe(e);
+        }
     });
 
     $(".slide").on('mousedown', function(e) {
@@ -98,6 +105,54 @@ $(document).ready(function() {
     // });
 });
 
+function dragMe(e) {
+    if (window.ddw_dragging) {
+    e = e || window.event;
+
+    let pageX = e.pageX;
+    let pageY = e.pageY;
+    // IE 8
+    if (pageX === undefined) {
+        pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+        pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+    }
+
+    
+    window.ddw_dragx = pageX;
+    let xDistance = window.ddw_dragx - window.ddw_x;
+    console.log('xDistance: ' + xDistance);
+    if (xDistance > 0) {
+        window.ddw_direction = "right";
+       // console.log("moving left");
+    } else {
+        window.ddw_direction = "left";
+       // console.log("moving right");
+    }
+
+    window.ddw_slides.map( function(index,slide) {
+
+        leftPos = $(slide).position().left;
+        let newLeft = leftPos;
+        
+        if (window.ddw_direction == "left") {
+        newLeft = leftPos - 1;
+    // console.log(newLeft);
+        }
+        else {
+            newLeft = leftPos + 1;
+        //  console.log(newLeft);
+
+        }
+        $(slide).css({left: newLeft + "px"});
+
+        // if ((newLeft < -800)  || (newLeft > 1600)){
+        //     clearInterval(window.ddw_spinner);
+        // }
+});
+  }
+
+}
+
 
 function touchDown(e) {
   
@@ -114,10 +169,13 @@ function touchDown(e) {
     window.ddw_x = pageX;
     window.ddw_y = pageY;
     window.ddw_t = new Date().getTime();
+    window.ddw_dragging = true;
    
 }
 
 function letUp(e) {
+    window.ddw_dragging = false;
+
     e = e || window.event;
 
     let pageX = e.pageX;
@@ -141,33 +199,43 @@ function letUp(e) {
 
     if (velocity > 0) {
         window.ddw_direction = "left";
-        console.log("moving left");
+       // console.log("moving left");
     } else {
         window.ddw_direction = "right";
-        console.log("moving right");
+       // console.log("moving right");
     }
+
+    if ((velocity > .05) || (velocity < -.05)) {
     window.ddw_v = Math.abs(velocity * 2);
     window.ddw_move = window.ddw_v ;
-    console.log("move: " + window.ddw_move);
+   // console.log("move: " + window.ddw_move);
 
     if (window.ddw_spinning == false) {
     spin();
     }
+  }
     
 }
 
 function spin() {
 
     let totalMove = 0;
+    if (window.ddw_spinning == false) {
     window.ddw_spinning = true;
 
-    if (totalMove == 0) {
+
     window.ddw_spinner = setInterval( function() {
       //console.log('spinning: '+ window.ddw_move);
 
-
+      if (!window.ddw_move) {
+          window.ddw_move = 0;
+      }
+      if (!window.ddw_v) {
+          window.ddw_v= 1;
+      }
             window.ddw_move += window.ddw_v;
             totalMove += window.ddw_move;
+            
         
             console.log("total move: " + totalMove);
             console.log("window.ddw_slide_width: " + window.ddw_slide_width);
@@ -202,6 +270,7 @@ function spin() {
         
     }, 10 );
   }
+  
 }
 
 function moveSlides() {

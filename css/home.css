@@ -209,6 +209,8 @@ p.notify {
     box-sizing: border-box;
     border:2px solid red;
     overflow: hidden;
+    cursor:pointer;
+    user-select: none;
 }
 .carousel {
     width:100%;
