@@ -1,4 +1,5 @@
 $(document).ready(function() { 
+    window.ddw_spinning =false;
 
     jQuery.event.special.touchstart = {
         setup: function( _, ns, handle ){
@@ -99,6 +100,7 @@ $(document).ready(function() {
 
 
 function touchDown(e) {
+  
     e = e || window.event;
 
     let pageX = e.pageX;
@@ -147,14 +149,19 @@ function letUp(e) {
     window.ddw_v = Math.abs(velocity * 2);
     window.ddw_move = window.ddw_v ;
     console.log("move: " + window.ddw_move);
+
+    if (window.ddw_spinning == false) {
     spin();
+    }
     
 }
 
 function spin() {
 
     let totalMove = 0;
+    window.ddw_spinning = true;
 
+    if (totalMove == 0) {
     window.ddw_spinner = setInterval( function() {
       //console.log('spinning: '+ window.ddw_move);
 
@@ -166,6 +173,8 @@ function spin() {
             console.log("window.ddw_slide_width: " + window.ddw_slide_width);
 
         if (totalMove >= window.ddw_slide_width)  {
+            totalMove = 0;
+            window.ddw_spinning = false;
             clearInterval(window.ddw_spinner);
             console.log("clearing interval");
             console.log("Done");
@@ -192,6 +201,7 @@ function spin() {
         //     }, 10)
         
     }, 10 );
+  }
 }
 
 function moveSlides() {
