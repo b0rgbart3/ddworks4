@@ -10,10 +10,9 @@ $(document).ready(function() {
         }
       };
       
-    if (window.ddw_spinner) {
-    clearInterval(window.ddw_spinner); }
-    if (window.ddw_slowing) {
-    clearInterval(window.ddw_slowing);}
+    // if (window.ddw_spinner) {
+    // clearInterval(window.ddw_spinner); }
+
     window.ddw_slides = $('.slide');
     window.ddw_slide_width = 1200;
     console.log(window.ddw_slides);
@@ -21,33 +20,28 @@ $(document).ready(function() {
 
     $(".carousel").on('mousedown', function(e) {
         e.stopPropagation();
-        if (window.ddw_spinner) {
-        clearInterval(window.ddw_spinner); }
-        if (window.ddw_slowing) {
-        clearInterval(window.ddw_slowing);}
-
+        // if (window.ddw_spinner) {
+        // clearInterval(window.ddw_spinner); }
 
         console.log('carousel down');
         touchDown(e);
     });
 
     $(".slide").on('mousedown', function(e) {
-        e.stopPropagation();
-        if (window.ddw_spinner) {
-            clearInterval(window.ddw_spinner); }
-            if (window.ddw_slowing) {
-            clearInterval(window.ddw_slowing);}
-        console.log('slide down');
-        touchDown(e);
+        // e.stopPropagation();
+        // if (window.ddw_spinner) {
+        //     clearInterval(window.ddw_spinner); }
+
+        // console.log('slide down');
+        // touchDown(e);
     });
     $('.slideImage').on('mousedown', function(e) {
-        e.stopPropagation();
-        if (window.ddw_spinner) {
-            clearInterval(window.ddw_spinner); }
-            if (window.ddw_slowing) {
-            clearInterval(window.ddw_slowing);}
-        console.log('image down');
-        touchDown(e);
+        // e.stopPropagation();
+        // if (window.ddw_spinner) {
+        //     clearInterval(window.ddw_spinner); }
+    
+        // console.log('image down');
+        // touchDown(e);
     });
 
     $(".carousel").mouseup(function(e) {
@@ -57,36 +51,50 @@ $(document).ready(function() {
     });
 
     $(".slide").mouseup( function(e) {
-        e.stopPropagation();
-        console.log('slide up');
-        letUp(e);
+        // e.stopPropagation();
+        // console.log('slide up');
+        // letUp(e);
     });
     $('.slideImage').mouseup(function(e) {
-        e.stopPropagation();
-        console.log('image up');
-        letUp(e);
+        // e.stopPropagation();
+        // console.log('image up');
+        // letUp(e);
     });
-    $('.slide').on("swipeleft", function() {
-        console.log("left");
-        window.ddw_direction = "left";
-        window.ddw_move = 1;
-        window.ddw_v = 1;
-        spin();
-    });
-    $('.carousel').on("swipeleft", function() {
-        console.log("left");
-        window.ddw_direction = "left";
-        window.ddw_move = 1;
-        window.ddw_v = 1;
-        spin();
-    });
-    $('.carousel').on("swiperight", function() {
-        console.log("right");
-        window.ddw_direction = "right";
-        window.ddw_move = 1;
-        window.ddw_v = 1;
-        spin();
-    });
+
+    // $('.carouselContainer').on('mouseout', function(e) {
+      
+
+    //     if ($(e.target).hasClass('carouselContainer')) {
+    //         console.log("from the container");
+    //         window.ddw_moving = false;
+    //         if (window.ddw_spinner) {
+    //             console.log("Moved out");
+    //             clearInterval(window.ddw_spinner); }
+    //     }
+
+    // });
+
+    // $('.slide').on("swipeleft", function() {
+    //     console.log("left");
+    //     window.ddw_direction = "left";
+    //     window.ddw_move = 1;
+    //     window.ddw_v = 1;
+    //     spin();
+    // });
+    // $('.carousel').on("swipeleft", function() {
+    //     console.log("left");
+    //     window.ddw_direction = "left";
+    //     window.ddw_move = 1;
+    //     window.ddw_v = 1;
+    //     spin();
+    // });
+    // $('.carousel').on("swiperight", function() {
+    //     console.log("right");
+    //     window.ddw_direction = "right";
+    //     window.ddw_move = 1;
+    //     window.ddw_v = 1;
+    //     spin();
+    // });
 });
 
 
@@ -147,7 +155,7 @@ function spin() {
 
     let totalMove = 0;
 
-    let spinner = setInterval( function() {
+    window.ddw_spinner = setInterval( function() {
       //console.log('spinning: '+ window.ddw_move);
 
 
@@ -158,7 +166,7 @@ function spin() {
             console.log("window.ddw_slide_width: " + window.ddw_slide_width);
 
         if (totalMove >= window.ddw_slide_width)  {
-            clearInterval(spinner);
+            clearInterval(window.ddw_spinner);
             console.log("clearing interval");
             console.log("Done");
         } else {

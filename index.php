@@ -44,7 +44,7 @@
     </div>
 
     <div class='carouselContainer' id="#Car">
-        <div class='carousel' onmousemove="trackMe()">
+        <div class='carousel'>
             <div class='slide slide1'>
                 <img src='images/work/client1a.jpg' class='slideImage' draggable='false'> 
             </div>
@@ -88,5 +88,5 @@
 
     </body>
 <script src='js/form_validation.js'></script>
-<script src='js/carousel2.js'></script>
+<script src='js/carousel.js'></script>
 </html>

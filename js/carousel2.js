@@ -1,21 +1,21 @@
 $(document).ready(function() { 
     window.ddw_moving = false;
 
-    jQuery.event.special.touchstart = {
-        setup: function( _, ns, handle ){
-          if ( ns.includes("noPreventDefault") ) {
-            this.addEventListener("touchstart", handle, { passive: true });
-          } else {
-            this.addEventListener("touchstart", handle, { passive: true });
-          }
-        }
-      };
+    // jQuery.event.special.touchstart = {
+    //     setup: function( _, ns, handle ){
+    //       if ( ns.includes("noPreventDefault") ) {
+    //         this.addEventListener("touchstart", handle, { passive: true });
+    //       } else {
+    //         this.addEventListener("touchstart", handle, { passive: true });
+    //       }
+    //     }
+    //   };
       
     
     window.ddw_slides = $('.slide');
-    window.ddw_slide_width = 1200;
-    console.log(window.ddw_slides);
-   // $('.slide').css({left: "-200px" });
+//     window.ddw_slide_width = 1200;
+//     console.log(window.ddw_slides);
+//    // $('.slide').css({left: "-200px" });
 
     $(".carousel").on('mousedown', function(e) {
         e.stopPropagation();
@@ -23,9 +23,11 @@ $(document).ready(function() {
     });
 
     $(".slide").on('mousedown', function(e) {
+        e.stopPropagation();
         touchDown(e);
     });
     $('.slideImage').on('mousedown', function(e) {
+        e.stopPropagation();
         touchDown(e);
     });
 
@@ -42,51 +44,139 @@ $(document).ready(function() {
         e.stopPropagation();
         letUp(e);
     });
-    $('.slide').on("swipeleft", function() {
+    // $('.slide').on("swipeleft", function() {
 
+    // });
+    $('.carousel').on('mouseout', function(e) {
+        window.ddw_moving = false;
     });
-    $('.carousel').on("swipeleft", function() {
-
+    
+    $('.carousel').on("swipeleft", function(e) {
+        console.log("swipe");
+        if (window.ddw_mover) {
+            clearInterval(window.ddw_mover);
+          }
+     //   window.ddw_moving=false;
+        trackMe(e);
+        moveLeft();
     });
     $('.carousel').on("swiperight", function() {
+        if (window.ddw_mover) {
+            clearInterval(window.ddw_mover);
+          }
+       // window.ddw_moving=false;
+        trackMe(e);
+        moveRight();
 
     });
+    $('.carousel').on("tap", function() {
+        console.log("tap");
+        if (window.ddw_mover) {
+            clearInterval(window.ddw_mover);
+          }
+        window.ddw_moving=false;
+    })
 });
 
 function trackMe(e) {
-    console.log("TRACKING: ");
+    //console.log("TRACKING: ");
+    if (ddw_moving) {
+        e = e || window.event;
 
+        let pageX = e.pageX;
+        let pageY = e.pageY;
+        // IE 8
+        if (pageX === undefined) {
+            pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+        }
+
+        window.ddw_x = pageX;
+        window.ddw_y = pageY;
+    
+        console.log(window.ddw_x);
+        if (window.ddw_x < window.ddw_start_x) {
+            moveLeft();
+        } else {
+            moveRight();
+        }
+    }
 }
 
 function touchDown(e) {
-    e = e || window.event;
-
-    let pageX = e.pageX;
-    let pageY = e.pageY;
-    // IE 8
-    if (pageX === undefined) {
-        pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-        pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+    if (window.ddw_mover) {
+      clearInterval(window.ddw_mover);
     }
-
-    window.ddw_x = pageX;
-    window.ddw_y = pageY;
-    //window.ddw_t = new Date().getTime();
-   
-    startMoving();
+    window.ddw_moving = true;
+    trackMe(e);
+    window.ddw_start_x = window.ddw_x;
+    window.ddw_start_y = window.ddw_y;
 }
 
 function letUp(e) {
-    e = e || window.event;
+    if (window.ddw_mover) {
+        clearInterval(window.ddw_mover);
+      }
+    trackMe(e);
+    window.ddw_moving = false;
 
-    let pageX = e.pageX;
-    let pageY = e.pageY;
-    // IE 8
-    if (pageX === undefined) {
-        pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-        pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-    }
-    stopMoving();
+
+}
+
+function moveRight() {
+   //// window.ddw_mover = setInterval( function() {
+        window.ddw_slides.map( (index, slide) => {
+        //console.log(slide);
+        let leftPos = $(slide).position().left;
+        console.log("Left: " + leftPos);
+        leftPos = leftPos + 10;
+        $(slide).css({left: leftPos + "px" });
+        });
+//}, 10);
+}
+
+function moveLeft() {
+
+   // window.ddw_mover = setInterval( function() {
+        window.ddw_slides.map( (index, slide) => {
+        //console.log(slide);
+        let leftPos = $(slide).position().left;
+        console.log("Left: " + leftPos);
+        leftPos = leftPos - 10;
+        $(slide).css({left: leftPos + "px" });
+        });
+//}, 10);
+
+}
+// function touchDown(e) {
+//     e = e || window.event;
+
+//     let pageX = e.pageX;
+//     let pageY = e.pageY;
+//     // IE 8
+//     if (pageX === undefined) {
+//         pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+//         pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+//     }
+
+//     window.ddw_x = pageX;
+//     window.ddw_y = pageY;
+    //window.ddw_t = new Date().getTime();
+   
+//     startMoving();
+// }
+
+// function letUp(e) {
+//     e = e || window.event;
+
+//     let pageX = e.pageX;
+//     let pageY = e.pageY;
+//     // IE 8
+//     if (pageX === undefined) {
+//         pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+//         pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+//     }
+//     stopMoving();
     
    // let xDistance = window.ddw_x - pageX;
 
@@ -111,27 +201,27 @@ function letUp(e) {
     // console.log("move: " + window.ddw_move);
     // spin();
     
-}
+//}
 
 
-var startMoving = function() {
-    if (!window.ddw_moving) {
-        window.ddw_moving = true;
-    console.log('moving');
-    let moved = 0;
-    let mover = setInterval( function() {
-        console.log("move by 1");
-        moved++;
-        if (moved >= 10) {
-            clearInterval(mover);
-        }
+// var startMoving = function() {
+//     if (!window.ddw_moving) {
+//         window.ddw_moving = true;
+//     console.log('moving');
+//     let moved = 0;
+//     let mover = setInterval( function() {
+//         console.log("move by 1");
+//         moved++;
+//         if (moved >= 10) {
+//             clearInterval(mover);
+//         }
 
-    }, 10);
-    }
-}
+//     }, 10);
+//     }
+// }
 
 
-var stopMoving = function() {
-    window.ddw_moving = false;
-    console.log('stop');
-}
+// var stopMoving = function() {
+//     window.ddw_moving = false;
+//     console.log('stop');
+// }
