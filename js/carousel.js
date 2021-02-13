@@ -1,6 +1,7 @@
 $(document).ready(function() { 
     window.ddw_spinning =false;
     window.ddw_dragging = false;
+    window.ddw_currentSlideNumber = 0;
 
     jQuery.event.special.touchstart = {
         setup: function( _, ns, handle ){
@@ -16,6 +17,7 @@ $(document).ready(function() {
     // clearInterval(window.ddw_spinner); }
 
     window.ddw_slides = $('.slide');
+    window.ddw_slideCount = window.ddw_slides.length;
     window.ddw_slide_width = 1200;
     console.log(window.ddw_slides);
    // $('.slide').css({left: "-200px" });
@@ -25,7 +27,7 @@ $(document).ready(function() {
         // if (window.ddw_spinner) {
         // clearInterval(window.ddw_spinner); }
 
-        console.log('carousel down');
+      //  console.log('carousel down');
         touchDown(e);
     });
 
@@ -83,7 +85,7 @@ $(document).ready(function() {
     // });
 
     $('.carousel').on("swipeleft", function() {
-        console.log("left");
+       // console.log("left");
         window.ddw_direction = "left";
         window.ddw_move = 1;
         window.ddw_v = 1;
@@ -97,7 +99,7 @@ $(document).ready(function() {
     //     spin();
     // });
     $('.carousel').on("swiperight", function() {
-        console.log("right");
+      //  console.log("right");
         window.ddw_direction = "right";
         window.ddw_move = 1;
         window.ddw_v = 1;
@@ -120,7 +122,7 @@ function dragMe(e) {
     
     window.ddw_dragx = pageX;
     let xDistance = window.ddw_dragx - window.ddw_x;
-    console.log('xDistance: ' + xDistance);
+  //  console.log('xDistance: ' + xDistance);
     if (xDistance > 0) {
         window.ddw_direction = "right";
        // console.log("moving left");
@@ -194,7 +196,7 @@ function letUp(e) {
 
     let velocity = (xDistance / elapsedTime) / 10;
 
-    console.log(xDistance + " pixels in " + elapsedTime + " milliseconds, for a velocity of: " + velocity);
+   // console.log(xDistance + " pixels in " + elapsedTime + " milliseconds, for a velocity of: " + velocity);
 
 
     if (velocity > 0) {
@@ -237,15 +239,29 @@ function spin() {
             totalMove += window.ddw_move;
             
         
-            console.log("total move: " + totalMove);
-            console.log("window.ddw_slide_width: " + window.ddw_slide_width);
+          //  console.log("total move: " + totalMove);
+          //  console.log("window.ddw_slide_width: " + window.ddw_slide_width);
 
         if (totalMove >= window.ddw_slide_width)  {
             totalMove = 0;
             window.ddw_spinning = false;
             clearInterval(window.ddw_spinner);
-            console.log("clearing interval");
-            console.log("Done");
+           
+          //  console.log("clearing interval");
+          //  console.log("Done");
+            if (window.ddw_direction == "right") {
+                window.ddw_currentSlideNumber = window.ddw_currentSlideNumber -1;
+                if (window.ddw_currentSlideNumber < 0 ) {
+                    window.ddw_currentSlideNumber = window.ddw_slideCount-1;
+                }
+
+            } else {
+                window.ddw_currentSlideNumber = window.ddw_currentSlideNumber + 1;
+                if (window.ddw_currentSlideNumber >= window.ddw_slideCount ) {
+                    window.ddw_currentSlideNumber = 0;
+                }
+            }
+            console.log("current slide: " + window.ddw_currentSlideNumber);
         } else {
         moveSlides();
        // console.log(window.ddw_move);
