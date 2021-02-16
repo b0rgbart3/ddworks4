@@ -32,6 +32,7 @@ $(document).ready(function() {
             }
     }, 1);
 
+
     $('.carousel').on('mouseout', function(e) {
         window.ddw_dragging = false;
     });
@@ -39,17 +40,14 @@ $(document).ready(function() {
     $('.carousel').on('mousedown', function(e) {
     
         window.ddw_dragging = true;
-        trackMove(e);
-        trackStart(e);
-        
+       trackStart(e);
     });
 
     $('.carousel').on('touchstart', function(e) {
         
-        console.log('touchstart');
         window.ddw_dragging = true;
-        trackMove(e);
         trackStart(e);
+        trackMove(e);
         
     });
     $('.carousel').on('touchend', function(e) {
@@ -58,14 +56,17 @@ $(document).ready(function() {
 
     $('.carousel').on('mouseup', function(e) {
         window.ddw_dragging = false;
+      //  trackMove(e);
     });
 
     $('.carousel').on('touchmove', function(e) {
-        console.log('touch moving');
+       // console.log('touch moving');
+        trackMove(e);
         moving(e);
     });
 
     $('.carousel').on('mousemove', function(e) {
+        trackMove(e);
         moving(e);
     });
 
@@ -73,7 +74,8 @@ $(document).ready(function() {
 
 function moving(e) {
     if (window.ddw_dragging) {
-        trackMove(e);
+       
+        
         let distance = window.ddw_x - window.ddw_prevx;
         if (distance > 0) {
             window.ddw_direction = "right";
@@ -82,6 +84,7 @@ function moving(e) {
             window.ddw_direction = "left";
         }
         slideSlides(distance);
+        
         }
 }
 
@@ -109,16 +112,20 @@ function trackMove(e) {
 function trackStart(e) {
     e = e || window.event;
 
-    let pageX = e.pageX;
-    let pageY = e.pageY;
+    let pageX = (e.type.toLowerCase() === 'mousemove')
+    ? e.pageX
+    : e.originalEvent.touches[0].pageX;
+    let pageY = (e.type.toLowerCase() === 'mousemove')
+    ? e.pageX
+    : e.originalEvent.touches[0].pageX;
     // IE 8
     if (pageX === undefined) {
         pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
         pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
     }
 
-    window.ddw_startx = pageX;
-    window.ddw_starty = pageY;
+    window.ddw_prevx = pageX;
+    window.ddw_prevy = pageY;
 }
 
 function slideSlides(distance) {
