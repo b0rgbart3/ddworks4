@@ -142,48 +142,73 @@ function slideSlides(distance) {
         checkForReposition(distance);
 }
 
+// This is the method that checks to see if we need to
+// wrap the slide deck around the other side (so we have a continuous mobius strip)
 function checkForReposition(distance) {
+
+    // If the distance is > 0 then we are moving to the right
     if (distance > 0) {
 
-       
-       // console.log("distance:" + distance);
-
+        // Get the position of the "first slide"
         let fsPos = $(window.ddw_firstSlide).position().left;
-      //  console.log('fsPos: ' + fsPos);
        
+        // Detect if the slide is moving past the edge of the carousel's left frame
         if (fsPos >= 1 ) {
 
-            console.log("reached the begining.");
+            // if the position of the first slide is >= 1, then 
             // we have reached the very begining of the slide sequence, so we need to
-            // wrap the last slide around to the left.
-
-            // let lastSlide = window.ddw_slideOrder.pop();
-            // window.ddw_slideOrder.unshift(lastSlide);
-            // console.log("new slide order: " + window.ddw_slideOrder);
+            // wrap the "last slide" around to the left.
            
             let lastLeft = 0 - $(window.ddw_lastSlide).width();
             $(window.ddw_lastSlide).css({left: lastLeft + "px"});
-            // console.log('Wrapping');
-
-             window.ddw_firstSlide = window.ddw_lastSlide;
-             window.ddw_slideNumber = window.ddw_slideNumber -1;
-             if (window.ddw_slideNumber < 0) {
-                 window.ddw_slideNumber = window.ddw_slideCount -1;
-             }
-             console.log('slideNumber: ' + window.ddw_slideNumber);
-             console.log('slideCount: ' + window.ddw_slideCount);
-             window.ddw_lastSlideNumber = window.ddw_lastSlideNumber -1;
-             if (window.ddw_lastSlideNumber < 0 ) {
-                 window.ddw_lastSlideNumber = window.ddw_slideCount -1;
-             }
-
-             console.log('lastSlideNumber: ' + window.ddw_lastSlideNumber);
-             window.ddw_lastSlide = window.ddw_slides[window.ddw_lastSlideNumber];
+    
+            // here we reset what is known as the "first" and "last" slide
+            // so the cycle can continue
+            window.ddw_firstSlide = window.ddw_lastSlide;
+            window.ddw_firstSlideNumber = window.ddw_lastSlideNumber;
+            window.ddw_slideNumber = window.ddw_slideNumber -1;
+            if (window.ddw_slideNumber < 0) {
+                window.ddw_slideNumber = window.ddw_slideCount -1;
+            }
+            window.ddw_lastSlideNumber = window.ddw_lastSlideNumber -1;
+            if (window.ddw_lastSlideNumber < 0 ) {
+                window.ddw_lastSlideNumber = window.ddw_slideCount -1;
+            }
+            window.ddw_lastSlide = window.ddw_slides[window.ddw_lastSlideNumber];
 
 
         }
 
-    } else {
+    } 
+    // If the distance < 0 then we are moving to the left
+    if (distance < 0) {
+        // Get the position of the "last slide"
+        let fsPos = $(window.ddw_lastSlide).position().left;
+        let cWidth = $('.carousel').width();
+        let rightEdge = fsPos + $(window.ddw_lastSlide).width();
 
+        // Detect if the slide is moving past the edge of the carousel's right frame
+        if (rightEdge <= cWidth ) {
+            // we have reached the very end of the slide sequence, so we need to
+            // wrap the "first slide" around to the right.
+
+            let firstLeft = cWidth-1;  // set the left side of the first slide to the edge of the frame
+            $(window.ddw_firstSlide).css({left: firstLeft + "px"});
+
+            // here we reset what is known as the "first" and "last" slide
+            // so the cycle can continue
+            window.ddw_lastSlide = window.ddw_firstSlide;
+            window.ddw_lastSlideNumber = window.ddw_firstSlideNumber;
+            window.ddw_slideNumber = window.ddw_slideNumber + 1;
+            if (window.ddw_slideNumber > (window.ddw_slideCount-1)) {
+                window.ddw_slideNumber = 0;
+            }
+            window.ddw_firstSlideNumber = window.ddw_firstSlideNumber +1;
+            if (window.ddw_firstSlideNumber > (window.ddw_slideCount-1) ) {
+                window.ddw_firstSlideNumber = 0;
+            }
+            window.ddw_firstSlide = window.ddw_slides[window.ddw_firstSlideNumber];
+           
+        }
     }
 }
