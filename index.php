@@ -88,5 +88,5 @@
 
     </body>
 <script src='js/form_validation.js'></script>
-<script src='js/carousel.js'></script>
+<script src='js/carousel3.js'></script>
 </html>
