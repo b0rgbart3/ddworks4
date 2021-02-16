@@ -71,8 +71,9 @@ $(document).ready(function() {
         // letUp(e);
     });
 
-    // $('.carouselContainer').on('mouseout', function(e) {
+ $('.carouselContainer').on('mouseout', function(e) {
       
+    window.ddw_dragging = false;
 
     //     if ($(e.target).hasClass('carouselContainer')) {
     //         console.log("from the container");
@@ -82,7 +83,7 @@ $(document).ready(function() {
     //             clearInterval(window.ddw_spinner); }
     //     }
 
-    // });
+     });
 
     $('.carousel').on("swipeleft", function() {
        // console.log("left");
