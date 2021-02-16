@@ -37,18 +37,42 @@ $(document).ready(function() {
     });
 
     $('.carousel').on('mousedown', function(e) {
+    
         window.ddw_dragging = true;
         trackMove(e);
         trackStart(e);
         
     });
 
+    $('.carousel').on('touchstart', function(e) {
+        
+        console.log('touchstart');
+        window.ddw_dragging = true;
+        trackMove(e);
+        trackStart(e);
+        
+    });
+    $('.carousel').on('touchend', function(e) {
+        window.ddw_dragging = false;
+    });
+
     $('.carousel').on('mouseup', function(e) {
         window.ddw_dragging = false;
     });
 
+    $('.carousel').on('touchmove', function(e) {
+        console.log('touch moving');
+        moving(e);
+    });
+
     $('.carousel').on('mousemove', function(e) {
-        if (window.ddw_dragging) {
+        moving(e);
+    });
+
+});
+
+function moving(e) {
+    if (window.ddw_dragging) {
         trackMove(e);
         let distance = window.ddw_x - window.ddw_prevx;
         if (distance > 0) {
@@ -59,18 +83,19 @@ $(document).ready(function() {
         }
         slideSlides(distance);
         }
-    });
-
-});
-
+}
 
 function trackMove(e) {
     window.ddw_prevx = window.ddw_x;
     window.ddw_prevy = window.ddw_y;
     e = e || window.event;
 
-    let pageX = e.pageX;
-    let pageY = e.pageY;
+    let pageX = (e.type.toLowerCase() === 'mousemove')
+    ? e.pageX
+    : e.originalEvent.touches[0].pageX;
+    let pageY = (e.type.toLowerCase() === 'mousemove')
+    ? e.pageX
+    : e.originalEvent.touches[0].pageX;
     // IE 8
     if (pageX === undefined) {
         pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
